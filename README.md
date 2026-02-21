@@ -1,4 +1,23 @@
-# Digital Twin Project
+# Thomas's Digital Twin
+
+# Setup
+1. Clone the repo
+2. Create a virtual environment and install dependencies:
+```bash
+pip install -r requirements.txt
+```
+3. Create a .env file with the OpenAI API key:
+```
+OPENAI_API_KEY=your-api-key-here
+```
+4. Ingest profile data
+```bash
+python ingest.py
+```
+5. Running the application:
+```bash
+streamlit run app.py
+```
 
 ## Phase 1
 
