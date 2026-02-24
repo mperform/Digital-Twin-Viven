@@ -271,6 +271,18 @@ def generate_report(results: list[dict]) -> str:
     ]
 
     for r in results:
+        ctx = (r.get("retrieved_context") or "").strip()
+        ctx_max_chars = 2000
+        if not ctx:
+            ctx_render = "(empty)"
+        elif len(ctx) > ctx_max_chars:
+            ctx_render = (
+                ctx[:ctx_max_chars]
+                + f"\n\n… (truncated, {len(ctx)} chars total)"
+            )
+        else:
+            ctx_render = ctx
+
         lines += [
             f"### [{r['id']}] {r['question']}",
             f"**Category:** {r['category']}  ",
@@ -287,6 +299,15 @@ def generate_report(results: list[dict]) -> str:
             f"- Hallucination: {r['reasoning']['hallucination']}",
             f"- Relevance: {r['reasoning']['relevance']}",
             f"- Persona Consistency: {r['reasoning']['persona_consistency']}",
+            "",
+            "<details>",
+            "<summary><strong>Retrieval context</strong></summary>",
+            "",
+            "````text",
+            ctx_render,
+            "````",
+            "",
+            "</details>",
             "",
             f"**Twin Response:** {r['twin_response'][:300]}...",
             "",

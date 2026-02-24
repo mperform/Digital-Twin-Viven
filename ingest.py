@@ -22,28 +22,41 @@ collection = chroma.get_or_create_collection(COLLECTION)
 def chunk_by_headers(text: str) -> list[dict]:
     """
     Split markdown text into chunks at every ## or ### header.
-    Returns list of {"header": str, "content": str}
+    Preserves parent ## context for ### level chunks so sub-sections
+    are distinguishable across projects.
     """
-    # Split on ## or ### headers, keeping the header in the chunk
     pattern = r'(?=^#{2,3}\s+.+$)'
     sections = re.split(pattern, text, flags=re.MULTILINE)
     
     chunks = []
+    current_parent = None  # track current ## level header
+    
     for section in sections:
         section = section.strip()
         if not section:
             continue
         
-        # Extract the header line
         lines = section.split('\n')
-        header = lines[0].strip('#').strip()
+        raw_header = lines[0].strip()
+        header = raw_header.strip('#').strip()
         content = '\n'.join(lines[1:]).strip()
         
         if not content:
             continue
-            
+
+        # Track ## level as parent context
+        if raw_header.startswith('## '):
+            current_parent = header
+            full_header = header
+        else:
+            # ### level — prepend parent for disambiguation
+            full_header = (
+                f"{current_parent} — {header}" 
+                if current_parent else header
+            )
+
         chunks.append({
-            "header": header,
+            "header": full_header,
             "content": content
         })
     
