@@ -31,8 +31,8 @@ streamlit run app.py
 ## Phase 1
 
 ### Personal Data
-- Store my personal information in .md files
-- One .md for each project I did
+- Store my personal information in markdown files
+- One markdown file for each area that's unique to me: opinions, profile, projects
 - Use ChromaDB to store into VectorDB
     - using vector DB rather than relational bc relational are designed for exact or structured lookups
     - VectorDB is very aligned with OpenAI embedding and can run kNN very fast
