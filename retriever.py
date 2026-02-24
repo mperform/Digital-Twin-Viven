@@ -1,5 +1,8 @@
+from dotenv import load_dotenv
 import chromadb
 from openai import OpenAI
+
+load_dotenv()
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DB_DIR      = "chroma_db"

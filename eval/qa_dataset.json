@@ -1,0 +1,162 @@
+[
+    {
+      "id": "f001",
+      "question": "What was the Average Displacement Error improvement in your autonomous driving research?",
+      "reference_answer": "I decreased the Average Displacement Error by 27.13% across 567 scenarios on 50 unique roadblocks.",
+      "expected_source": "projects.md",
+      "expected_section": "End-to-End Differentiable Autonomous Driving",
+      "category": "factual"
+    },
+    {
+      "id": "f002",
+      "question": "How many GPUs did you use for autonomous driving training and what was the speedup?",
+      "reference_answer": "I used 4 Nvidia A40 GPUs with roadblock-level data parallelism, improving training efficiency by approximately 3x.",
+      "expected_source": "projects.md",
+      "expected_section": "End-to-End Differentiable Autonomous Driving",
+      "category": "factual"
+    },
+    {
+      "id": "f003",
+      "question": "What Pearson correlation did OMNI-CAN achieve?",
+      "reference_answer": "OMNI-CAN achieved a Pearson correlation of 0.989 and R² of 97.8% on the held-out test set.",
+      "expected_source": "projects.md",
+      "expected_section": "OMNI-CAN — Contactless Vital Sign Monitoring",
+      "category": "factual"
+    },
+    {
+      "id": "f004",
+      "question": "What diagnosis accuracy did Omni-RAG achieve and how does it compare to LLM-only?",
+      "reference_answer": "Omni-RAG achieved SOTA in-domain diagnosis exact-match accuracy of 79%, which is a 5x improvement over LLM-only configurations.",
+      "expected_source": "projects.md",
+      "expected_section": "Omni-RAG — Medical Knowledge Graph-Assisted RAG Framework",
+      "category": "factual"
+    },
+    {
+      "id": "f005",
+      "question": "What post-training framework and techniques did you use for the 70B model in Omni-RAG?",
+      "reference_answer": "I used TRL with LoRA and quantization on DeepSpeed ZeRO-3 for post-training the 70B model.",
+      "expected_source": "projects.md",
+      "expected_section": "Omni-RAG — Medical Knowledge Graph-Assisted RAG Framework",
+      "category": "factual"
+    },
+    {
+      "id": "f006",
+      "question": "What throughput and energy improvements did MTSPipe achieve?",
+      "reference_answer": "MTSPipe achieved a 6% throughput improvement and 7% energy reduction, with a 20% reduction in redundant forward passes through dynamic routing.",
+      "expected_source": "projects.md",
+      "expected_section": "MTSPipe — Multi-Teacher Knowledge Distillation Pipeline",
+      "category": "factual"
+    },
+    {
+      "id": "f007",
+      "question": "What XR hardware did you deploy OmniCare on and what models did it serve?",
+      "reference_answer": "OmniCare was deployed on Samsung XR headsets. It served a distilled DeepSeek-R1 across 2 L40S GPUs for clinical reasoning, Whisper for speech-to-text transcription, and real-time vitals inference via rPPG.",
+      "expected_source": "projects.md",
+      "expected_section": "OmniCare — AI-Driven Clinical Automation Platform",
+      "category": "factual"
+    },
+    {
+      "id": "f008",
+      "question": "Where are you from and what is your citizenship status?",
+      "reference_answer": "I am originally from Toronto, Canada and am a Canadian citizen currently based in Ann Arbor, MI.",
+      "expected_source": "profile.md",
+      "expected_section": "Background",
+      "category": "factual"
+    },
+    {
+      "id": "o001",
+      "question": "What is your opinion on RAG versus fine-tuning?",
+      "reference_answer": "If the knowledge is factual and retrievable, RAG is almost always the better starting point — cheaper, more interpretable, and easier to update. Fine-tuning makes sense when you need to shift model behavior or style, not just inject facts. The best production systems usually combine both.",
+      "expected_source": "opinions.md",
+      "expected_section": "On RAG vs Fine-Tuning",
+      "category": "opinion"
+    },
+    {
+      "id": "o002",
+      "question": "How do you think about hallucination in LLMs?",
+      "reference_answer": "Hallucination is not a bug to be patched — it's a fundamental property of how language models work. The right response is to build systems that constrain the model's output space through retrieval grounding, structured prompting, and output validation.",
+      "expected_source": "opinions.md",
+      "expected_section": "On Hallucination",
+      "category": "opinion"
+    },
+    {
+      "id": "o003",
+      "question": "What is your approach to debugging?",
+      "reference_answer": "My process is: reproduce reliably, isolate the smallest failing case, form a hypothesis about root cause, then test the hypothesis — not the symptom. Random changes to fix a bug you don't understand usually create two new bugs.",
+      "expected_source": "opinions.md",
+      "expected_section": "On Debugging",
+      "category": "opinion"
+    },
+    {
+      "id": "o004",
+      "question": "What do you think about working at early stage startups?",
+      "reference_answer": "I find the ambiguity energizing rather than frustrating because the decisions you make actually matter — there's no committee to absorb the impact of a bad architecture choice. The tradeoff is that you have to be comfortable being wrong quickly and changing course without ego.",
+      "expected_source": "opinions.md",
+      "expected_section": "On Working at Startups",
+      "category": "opinion"
+    },
+    {
+      "id": "o005",
+      "question": "How do you think about system design versus implementation?",
+      "reference_answer": "Good system design is more valuable than clever implementation. A mediocre implementation of a good design is fixable. A clever implementation of a bad design creates technical debt that compounds. My habit is to draw out the full system flow before writing any code.",
+      "expected_source": "opinions.md",
+      "expected_section": "On System Design",
+      "category": "opinion"
+    },
+    {
+      "id": "o006",
+      "question": "What do you think about evals in ML engineering?",
+      "reference_answer": "Evals are the most underrated part of ML engineering. You should define what good looks like before you write a single line of training code, otherwise you're optimizing blindly.",
+      "expected_source": "opinions.md",
+      "expected_section": "On Evaluation",
+      "category": "opinion"
+    },
+    {
+      "id": "oos001",
+      "question": "What is your favorite restaurant in Ann Arbor?",
+      "reference_answer": null,
+      "expected_source": null,
+      "expected_section": null,
+      "category": "out_of_scope"
+    },
+    {
+      "id": "oos002",
+      "question": "What did you do last weekend?",
+      "reference_answer": null,
+      "expected_source": null,
+      "expected_section": null,
+      "category": "out_of_scope"
+    },
+    {
+      "id": "oos003",
+      "question": "What is your salary expectation?",
+      "reference_answer": null,
+      "expected_source": null,
+      "expected_section": null,
+      "category": "out_of_scope"
+    },
+    {
+      "id": "oos004",
+      "question": "Can you write me a Python script to sort a list?",
+      "reference_answer": null,
+      "expected_source": null,
+      "expected_section": null,
+      "category": "out_of_scope"
+    },
+    {
+      "id": "p001",
+      "question": "What are your hobbies outside of work?",
+      "reference_answer": "I played ice hockey from age five to sixteen, and my favorite NHL team is the Toronto Maple Leafs. I also like working on cars in my spare time — my favorite brand is BMW for their styling, design, and engineering philosophy. I also stay on top of the latest AI/ML advances and like to form my own opinions before reading reviews.",
+      "expected_source": "profile.md",
+      "expected_section": "Fun Facts",
+      "category": "personal"
+    },
+    {
+      "id": "p002",
+      "question": "What is your working style?",
+      "reference_answer": "I prefer async communication with clear written context before meetings. I work best with well-defined success metrics and autonomy on implementation. I'm comfortable with ambiguity but proactively seek alignment early to avoid rework.",
+      "expected_source": "profile.md",
+      "expected_section": "Working Style",
+      "category": "personal"
+    }
+  ]

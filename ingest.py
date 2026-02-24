@@ -1,9 +1,12 @@
 import os
 import re
 import hashlib
+from dotenv import load_dotenv
 import chromadb
 from chromadb.config import Settings
 from openai import OpenAI
+
+load_dotenv()
 
 # ── Config ────────────────────────────────────────────────────────────────────
 DATA_DIR    = "Profile"           # folder containing the .md files

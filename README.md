@@ -43,7 +43,6 @@ streamlit run app.py
     Project: OmniRAG
     ```
 
-
 ### DB Construction
 - Offline DB construction
     - Runs script to construct DB based on my profile
@@ -55,7 +54,7 @@ streamlit run app.py
     - includes conversation history
 2. Based on user input, run DB querying and grab relevant information and personality 
     - Top k = 5 chunks retrieved to start with
-3. Concatenate input: [system prompt] + [user input] + [retrieved information] + [personality information]
+3. Concatenate input: [system prompt] + [user input] + [retrieved information] + [personality information] + [persona context]
     - System prompt can be interleaved with the user input, retrieved info
 4. API call with concatenated input
 5. Receives result
@@ -69,4 +68,90 @@ streamlit run app.py
 - receives result
 - displays result
 
-## Phase 2
+## Phase 2 -- Response Quality
+To analyze the response quality, I build a systematic evaluation suite that measures the twin's response quality across multiple dimensions. 
+    - Factual grounding
+    - Persona consistency
+    - Hallucination rate
+- The evaluation suite is built around a LLM-as-a-Judge framework where a separate LLM is deployed to judge the retrieval context and LLM output. 
+- The evaluation suite will be run on a custom built validation dataset based on my profile (markdown files)
+
+### Evaluation Dimensions
+- The digital twin is evaluated on several dimensions:
+    - **Factual Grounding** -- is every claim supported by the retrieved context?
+    - **Hallucination** -- does the response fabricate or contradict information not present in the retrieved context?
+    - **Relevance** -- does the response actually answer the input prompt?
+    - **Persona Consistency** -- does the response sound like Thomas based on how Thomas likes to speak and write?
+- Each dimension is judged on a scale of 1-5 by the Judge. Overall, each question has a score out of 20.
+
+### QA Dataset for Evaluation
+- To evaluate the response quality, I built a custom QA dataset around my profile. 
+    - The questions in this dataset have known answers based on the markdown files.
+    - Each entry of the dataset will be:
+    ```json
+        {
+        "question": "What was the ADE improvement in your autonomous driving research?",
+        "reference_answer": "I decreased the Average Displacement Error by 27.13% across 567 scenarios on 50 unique roadblocks.",
+        "expected_source": "projects.md",
+        "expected_section": "End-to-End Differentiable Autonomous Driving",
+        "category": "factual"
+        }
+    ```
+    - I define four question categories:
+        1. **Factual** -- Questions with a clear answer directly in the markdown. Testing the retrieval accuracy and hallucination. 
+        2. **Opinion** -- Questions about my views that are answered in `opinions.md`. These ensure the digital twin has persona consistency. 
+        3. **Out-of-scope** -- questions that I should be able to answer from my profile. These tests the hallucination resistance.
+        4. **Personal** -- questions that are completely unrelated to Thomas's career or projects. These are distinct from the factual project questions and opinion technical questions. Since these are less in quantity, it would be more challenging to retrieve. 
+
+### LLM-As-a-Judge
+- We will deploy another LLM acting as a judge to evaluate the LLM output as well as the retrieval context
+- The evaluation will be done in two aspects:
+    1. Retrieval context evaluation
+    2. LLM output
+
+- Both aspects will be graded on several metrics
+    - Factual Grounding
+    - Persona consistency
+    - Hallucination
+    - Relevance
+
+### Persona Reference Card
+- To ensure the alignment persona and language usage between me and digital twin, I write a reference card (`eval/persona_reference.md`) containing a style description and real writing samples drawn from my interview preparation notes. This markdown file is given to the judge as the rubric for persona scoring, and is also integrated into the digital twin's system prompt to ensure the twin can speak in a style most aligned with how Thomas speaks. 
+
+### Evaluation Pipeline
+1. QA Dataset (`eval/qa_dataset.json`)
+2. run each question through the twin, receiving response & retrieved context
+3. Pass to judge LLM: 
+    - Question
+    - Retrieved context
+    - Response
+    - Persona reference
+4. Judge scores each dimension with one-sentence reasoning 
+5. aggregate into results.json and report.md
+
+### Evaluation Results
+- To run evaluation suite:
+```bash
+python eval/eval.py
+```
+
+### Baseline Results (gpt-4o-mini, top-k=4)
+| Category     | Questions | Avg Score |
+|--------------|-----------|-----------|
+| Opinion      | 6         | 5.00      |
+| Personal     | 2         | 4.50      |
+| Factual      | 8         | 3.31      |
+| Out-of-scope | 4         | 1.88      |
+
+| Dimension          | Avg Score |
+|--------------------|-----------|
+| Relevance          | 4.05      |
+| Persona Consistency| 3.75      |
+| Factual Grounding  | 3.50      |
+| Hallucination      | 3.65      |
+
+**Overall: 3.74 / 5.0**
+
+### Evaluation Result Analysis 
+- 
+
