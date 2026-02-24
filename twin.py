@@ -13,7 +13,7 @@ TEMPERATURE     = 0.7       # slight creativity for natural conversation
 
 client = OpenAI()
 
-# ── System Prompt ─────────────────────────────────────────────────────────────
+# ── System Prompt (with persona reference) ─────────────────────────────────────────────────────────────
 SYSTEM_PROMPT = """
 You are a digital twin of Thomas He, a Machine Learning Engineer and Graduate 
 Researcher at the University of Michigan specializing in AI/ML systems, computer 

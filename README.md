@@ -19,6 +19,15 @@ python ingest.py
 streamlit run app.py
 ```
 
+# Repo Structure
+
+- **`ingest.py`**: Parses personal `.md` profile files, chunks them by header, embeds each chunk, and stores them in ChromaDB to build the vector database offline.
+- **`retriever.py`**: Given a user query, embeds it and performs a top-k similarity search against ChromaDB to fetch the most relevant context chunks.
+- **`twin.py`**: Core chat logic — maintains a sliding-window conversation history, calls the retriever, assembles the full prompt (system + history + context), and queries the OpenAI API.
+- **`app.py`**: Streamlit web UI that wires up the chat interface and calls `twin.py` to handle each user message.
+- **`eval/eval.py`**: Evaluation harness that runs a set of test questions against the twin, scores responses for faithfulness and persona alignment, and generates a report.
+- **`__init__.py`**: Patches the `sqlite3` module with `pysqlite3` so ChromaDB works correctly in constrained environments (e.g. Streamlit Cloud).
+
 ## Phase 1
 
 ### Personal Data

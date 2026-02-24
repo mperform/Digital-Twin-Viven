@@ -156,6 +156,9 @@ def judge_response(
     category:         str
 ) -> dict:
     """Call the LLM judge and parse scores."""
+
+    # build the appropriate prompt for this question
+    # prompt is different for a out of scope question than a regular question
     prompt = build_judge_prompt(
         question, response, context,
         persona_ref, reference_answer, category

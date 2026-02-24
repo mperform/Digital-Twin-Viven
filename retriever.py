@@ -68,33 +68,6 @@ def retrieve(query: str, top_k: int = TOP_K) -> str:
     return format_chunks(results)
 
 
-# ── Optional: Source-Filtered Retrieval ───────────────────────────────────────
-def retrieve_by_type(query: str, 
-                     source_type: str, 
-                     top_k: int = TOP_K) -> str:
-    """
-    Retrieve chunks filtered by source type.
-    Useful for targeted retrieval e.g. only personality
-    chunks for casual questions, only project chunks for
-    technical questions.
-    
-    source_type: 'personality' | 'project' | 'opinion'
-    """
-    query_embedding = embed_query(query)
-
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=top_k,
-        where={"source_type": source_type},
-        include=["documents", "metadatas", "distances"]
-    )
-
-    if not results["documents"][0]:
-        return f"No relevant {source_type} context found."
-
-    return format_chunks(results)
-
-
 if __name__ == "__main__":
     # Quick test
     test_query = "Tell me about Thomas's autonomous driving research"
